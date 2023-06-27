@@ -3,3 +3,23 @@ Microsoft 365 Admin Center,06/27/2023 19:38,200
 Power Platform Admin Center,06/27/2023 19:38,200
 Azure Status,06/27/2023 19:38,200
 Random Bad Endpoint,06/27/2023 19:38,"500 Server Error: Internal Server Error for url: https://httpstat.us/Random/400-404,500-504"
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:40,200
+Power Platform Admin Center,06/27/2023 19:40,200
+Azure Status,06/27/2023 19:40,200
+Random Bad Endpoint,06/27/2023 19:40,"503 Server Error: Service Unavailable for url: https://httpstat.us/Random/400-404,500-504"
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:43,200
+Power Platform Admin Center,06/27/2023 19:43,200
+Azure Status,06/27/2023 19:43,200
+Random Bad Endpoint,06/27/2023 19:43,"500 Server Error: Internal Server Error for url: https://httpstat.us/Random/400-404,500-504"
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:43,200
+Power Platform Admin Center,06/27/2023 19:43,200
+Azure Status,06/27/2023 19:43,200
+Random Bad Endpoint,06/27/2023 19:43,"500 Server Error: Internal Server Error for url: https://httpstat.us/Random/400-404,500-504"
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:47,200
+Power Platform Admin Center,06/27/2023 19:47,200
+Azure Status,06/27/2023 19:47,200
+Random Bad Endpoint,06/27/2023 19:47,"502 Server Error: Bad Gateway for url: https://httpstat.us/Random/400-404,500-504"
