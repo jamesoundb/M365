@@ -48,17 +48,18 @@ def response_check(response=None):
             html_content = response.text
    
             if "Available" in html_content:
-                print("Status is Available." + "\n")
+                print("Status is Available.")
                 result = True
-                print("Response Check Result:\n",result)
+                print("Response Check Result:",result)
                 print()
             else:
-                print("Status is Unavailable." + "\n")
+                print("Status is Unavailable.")
                 result = False
-                print("Response Check Result:\n",result)
+                print("Response Check Result:",result)
                 print()
         
     except requests.exceptions.RequestException as e:
+        print()
         error_message = "Error occurred: \n" + str(e)
         print(error_message)
         match = re.search(r":\s*([0-9]+)", error_message)
