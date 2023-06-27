@@ -1,0 +1,20 @@
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:34,200
+
+
+
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:34,200
+Power Platform Admin Center,06/27/2023 19:34,200
+
+
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:34,200
+Power Platform Admin Center,06/27/2023 19:34,200
+Azure Status,06/27/2023 19:34,200
+
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:34,200
+Power Platform Admin Center,06/27/2023 19:34,200
+Azure Status,06/27/2023 19:34,200
+Random Bad Endpoint,06/27/2023 19:34,"404 Client Error: Not Found for url: https://httpstat.us/Random/400-404,500-504"

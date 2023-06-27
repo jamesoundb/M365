@@ -57,11 +57,9 @@ def response_check(response=None):
 
             if "Available" in html_content:
                 print("Status is Available.")
-                LOG_MESSAGES.append("Available")
                 result = True
                 print("Response Check Result:",result)
                 print()
-                LOG_MESSAGES.append("True")
                 return result
             else:
                 print("Status is Unavailable.")
@@ -98,8 +96,11 @@ def checks_prints(endpoint_dict, prints):
         response_check(endpoint((http[i])))
         with open("logs.csv", "a", newline="") as file:
             writer = csv.writer(file)
-            writer.writerow(["Service", "Date", "Response Code", "Error Message"])
-            writer.writerows([msg] for msg in LOG_MESSAGES)
+            writer.writerow(["Service", "Date", "Response Code"])
+            writer.writerow(LOG_MESSAGES[:3])
+            writer.writerow(LOG_MESSAGES[3:6])
+            writer.writerow(LOG_MESSAGES[6:9])
+            writer.writerow(LOG_MESSAGES[9:])
 
 
 if __name__ == '__main__':
