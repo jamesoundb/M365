@@ -94,13 +94,13 @@ def checks_prints(endpoint_dict, prints):
         LOG_MESSAGES.append(stripped)
         LOG_MESSAGES.append(timestamp(timezone=TIMEZONE))
         response_check(endpoint((http[i])))
-        with open("logs.csv", "a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Service", "Date", "Response Code"])
-            writer.writerow(LOG_MESSAGES[:3])
-            writer.writerow(LOG_MESSAGES[3:6])
-            writer.writerow(LOG_MESSAGES[6:9])
-            writer.writerow(LOG_MESSAGES[9:])
+    with open("logs.csv", "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Service", "Date", "Response Code"])
+        writer.writerow(LOG_MESSAGES[:3])
+        writer.writerow(LOG_MESSAGES[3:6])
+        writer.writerow(LOG_MESSAGES[6:9])
+        writer.writerow(LOG_MESSAGES[9:])
 
 
 if __name__ == '__main__':
