@@ -1,0 +1,5 @@
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 19:38,200
+Power Platform Admin Center,06/27/2023 19:38,200
+Azure Status,06/27/2023 19:38,200
+Random Bad Endpoint,06/27/2023 19:38,"500 Server Error: Internal Server Error for url: https://httpstat.us/Random/400-404,500-504"
