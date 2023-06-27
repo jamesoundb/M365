@@ -138,22 +138,15 @@ def graphics():
     sense.set_rotation(180)
     sense.set_pixels(question_mark)
 
-
-def end_address(endpoint_dict):
+def checks_prints(endpoint_dict, prints):
     http = []
     for k, v in endpoint_dict.items():
         http.append(v)
-    return http
-
-
-def checks_prints(endpoints, prints):
-    http = end_address(endpoints)
     for i, print_item in enumerate(prints):
         blink_leds()
         print(f"Timestamp:{timestamp(timezone=TIMEZONE)}" + print_item)
         response_check(endpoint((http[i])))
         time.sleep(2)
 
-
 if __name__ == '__main__':
-    checks_prints(endpoints=ENDPOINTS, prints=PRINTS)
+    checks_prints(endpoint_dict=ENDPOINTS, prints=PRINTS)

@@ -66,20 +66,13 @@ def response_check(response=None):
         print("Response Check Result:", result)
         return result
     
-
-def end_address(endpoint_dict):
+def checks_prints(endpoint_dict, prints):
     http = []
     for k, v in endpoint_dict.items():
         http.append(v)
-    return http
-
-
-def checks_prints(endpoints, prints):
-    http = end_address(endpoints)
     for i, print_item in enumerate(prints):
         print(f"Timestamp:{timestamp(timezone=TIMEZONE)}" + print_item)
         response_check(endpoint((http[i])))
 
-
 if __name__ == '__main__':
-    checks_prints(endpoints=ENDPOINTS, prints=PRINTS)
+    checks_prints(endpoint_dict=ENDPOINTS, prints=PRINTS)
