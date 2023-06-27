@@ -154,6 +154,7 @@ def all_services_check():
     m365_check()
     pwr_plt_admin()
     azure_stat()
+    # rand_bad_endpoint()
     
 if __name__ == '__main__':
     all_services_check()
