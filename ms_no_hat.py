@@ -1,9 +1,11 @@
 import requests
+import os
 import re
 import csv
 from datetime import datetime
 import pytz
 import time
+
 
 TIMEZONE = "America/New_York"
 ENDPOINTS = {
@@ -17,6 +19,11 @@ PRINTS = ["***** Microsoft 365 Admin Center: *****",
           "***** Power Platform Admin Center: *****",
           "***** Azure Status: *****",
           "***** Random Bad Endpoint: *****"]
+
+LOG_MESSAGES = []
+
+script_directory = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(script_directory, "log.csv")
 
 def timestamp(timezone: str) -> str:
     """Takes a timezone parameter and returns a formatted timestamp for month, day, year, hours, and minutes."""
@@ -45,13 +52,16 @@ def response_check(response=None):
         if response is not None:
             response.raise_for_status()  # Raise an exception for non-successful status codes
             print("\n" + "Status Code:", response.status_code)
+            LOG_MESSAGES.append("200")
             html_content = response.text
 
             if "Available" in html_content:
                 print("Status is Available.")
+                LOG_MESSAGES.append("Available")
                 result = True
                 print("Response Check Result:",result)
                 print()
+                LOG_MESSAGES.append("True")
                 return result
             else:
                 print("Status is Unavailable.")
@@ -60,12 +70,14 @@ def response_check(response=None):
                 print()
                 return result
     except requests.exceptions.RequestException as e:
+        LOG_MESSAGES.append(e)
         print()
         error_message = "Error occurred: \n" + str(e)
         print(error_message)
         match = re.search(r":\s*([0-9]+)", error_message)
         if match:
             error_number = match.group(1)
+
         else:
             print("No number found.")
         
@@ -80,7 +92,14 @@ def checks_prints(endpoint_dict, prints):
         http.append(v)
     for i, print_item in enumerate(prints):
         print(f"Timestamp:{timestamp(timezone=TIMEZONE)}" + print_item)
+        stripped = ' '.join(print_item.replace("*", "").replace(":", "").split())
+        LOG_MESSAGES.append(stripped)
+        LOG_MESSAGES.append(timestamp(timezone=TIMEZONE))
         response_check(endpoint((http[i])))
+        with open("logs.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerows([msg] for msg in LOG_MESSAGES)
+
 
 if __name__ == '__main__':
     checks_prints(endpoint_dict=ENDPOINTS, prints=PRINTS)
