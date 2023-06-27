@@ -17,8 +17,7 @@ azure_status = "https://azure.status.microsoft/en-us/status"
 random_bad_endpoint = "https://httpstat.us/Random/400-404,500-504"
 
 def blink_leds() -> None:
-    """Flashes the LED matrix for 2 times"""
-    # if not on:
+    """Flashes the LED matrix 2 times"""
     for _ in range(2):  # 2 iterations for approximately 2 seconds
         sense.clear(white)  # Turn on LEDs (white)
         time.sleep(0.5)  # Pause for 0.5 seconds
@@ -35,7 +34,7 @@ def timestamp(timezone: str) -> str:
     return timestamp
 
 def led_time(timezone: str) -> str:
-    """Takes a timezone parameter and returns a formatted timestamp wih hours and minutes."""
+    """Takes a timezone parameter and returns a formatted timestamp with hours and minutes."""
     est = pytz.timezone(timezone)
     utc_now = datetime.now(pytz.utc)
     est_now = utc_now.astimezone(est)
@@ -44,7 +43,8 @@ def led_time(timezone: str) -> str:
     return led_timestamp
 
 
-def endpoint(endpoint):
+def endpoint(endpoint: str) -> requests.models.Response:
+    """Takes an endpoint string parameter (ex:https://status.office365.com/api/feed/mac) and returns the response code."""
     try:
         response = requests.get(endpoint)
         response.raise_for_status()  # Raise an exception for non-successful status codes
@@ -55,7 +55,8 @@ def endpoint(endpoint):
     finally:
         return response
 
-def led_timestamp(timestamp, text, background):
+def led_timestamp(timestamp: str, text: tuple, background: tuple):
+    """Takes timestamp format ('%H:%M'), text color, and background color parameters then displays the time to the LED matrix."""
     for i in range(len(timestamp)):
         # Set pixels on the LED matrix
         for y in range(8):
@@ -71,6 +72,7 @@ def led_timestamp(timestamp, text, background):
 
 
 def response_check(response=None):
+    """Takes an endpoint response parameter and returns True if endpoint status is available."""
     try:
         if response is not None:
             response.raise_for_status()  # Raise an exception for non-successful status codes
@@ -86,10 +88,12 @@ def response_check(response=None):
                 print("Status is Available." + "\n")
                 led_timestamp(timestamp=led_time(timezone=timezone), text=blue, background=green)
                 sense.set_pixels(smiley_face)
+                result = True
             else:
                 print("Status is Unavailable." + "\n")
                 led_timestamp(timestamp=led_time(timezone=timezone), text=yellow, background=red)
                 sense.set_pixels(sad_face)
+                result = False
     except requests.exceptions.RequestException as e:
         # Display error message on the LED matrix
         error_message = "Error occurred: \n" + str(e)
@@ -108,30 +112,35 @@ def response_check(response=None):
         return result
 
 def m365_check():
+    """Executes the health check for Microsoft 365 Admin Center."""
     blink_leds()
     print(f"Timestamp:{timestamp(timezone=timezone)} ***** Microsoft 365 Admin Center: *****")
     response_check(endpoint(ms_admin_ctr))
     time.sleep(2)
 
 def pwr_plt_admin():
+    """Executes the health check for Power Platform Admin Center."""
     blink_leds()
     print(f"Timestamp:{timestamp(timezone=timezone)} ***** Power Platform Admin Center: *****")
     response_check(endpoint(pwr_plat_admin_ctr))
     time.sleep(2)
 
 def azure_stat():
+    """Executes the health check for Azure Status."""
     blink_leds()
     print(f"Timestamp:{timestamp(timezone=timezone)} ***** Azure Status: *****")
     response_check(endpoint(azure_status))
     time.sleep(2)
 
 def rand_bad_endpoint():
+    """Executes the health check for Random Bad Endpoint."""
     blink_leds()
     print(f"Timestamp:{timestamp(timezone=timezone)} ***** Random Bad Endpoint: *****")
     response_check(endpoint(random_bad_endpoint))
     time.sleep(2)
 
 def graphics():
+    """Executes all graphics patterns from graphics module."""
     sense.set_rotation(180)
     sense.set_pixels(heart)
     time.sleep(5)
@@ -151,6 +160,7 @@ def graphics():
     sense.set_pixels(question_mark)
 
 def all_services_check():
+    """Executes all service check functions"""
     m365_check()
     pwr_plt_admin()
     azure_stat()
