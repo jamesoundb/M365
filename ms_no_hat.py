@@ -49,8 +49,14 @@ def response_check(response=None):
    
             if "Available" in html_content:
                 print("Status is Available." + "\n")
+                result = True
+                print("Response Check Result:\n",result)
+                print()
             else:
                 print("Status is Unavailable." + "\n")
+                result = False
+                print("Response Check Result:\n",result)
+                print()
         
     except requests.exceptions.RequestException as e:
         error_message = "Error occurred: \n" + str(e)

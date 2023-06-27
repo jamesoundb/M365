@@ -95,11 +95,15 @@ def response_check(response=None):
                 led_timestamp(timestamp=led_time(timezone=TIMEZONE), text=blue, background=green)
                 sense.set_pixels(smiley_face)
                 result = True
+                print("Response Check Result:\n",result)
+                print()
             else:
                 print("Status is Unavailable." + "\n")
                 led_timestamp(timestamp=led_time(timezone=TIMEZONE), text=yellow, background=red)
                 sense.set_pixels(sad_face)
                 result = False
+                print("Response Check Result:\n",result)
+                print()
     except requests.exceptions.RequestException as e:
         # Display error message on the LED matrix
         error_message = "Error occurred: \n" + str(e)
