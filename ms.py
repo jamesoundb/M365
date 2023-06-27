@@ -82,7 +82,6 @@ def response_check(response=None):
     try:
         if response is not None:
             response.raise_for_status()  # Raise an exception for non-successful status codes
-            # on = True
             # Display smiley face on the LED matrix
             sense.set_rotation(180)
             sense.set_pixels(smiley_face)
@@ -97,6 +96,7 @@ def response_check(response=None):
                 result = True
                 print("Response Check Result:",result)
                 print()
+                return result
             else:
                 print("Status is Unavailable.")
                 led_timestamp(timestamp=led_time(timezone=TIMEZONE), text=yellow, background=red)
@@ -104,6 +104,7 @@ def response_check(response=None):
                 result = False
                 print("Response Check Result:",result)
                 print()
+                return result
     except requests.exceptions.RequestException as e:
         # Display error message on the LED matrix
         error_message = "Error occurred: \n" + str(e)

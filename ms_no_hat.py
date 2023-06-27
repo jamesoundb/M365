@@ -46,18 +46,19 @@ def response_check(response=None):
             response.raise_for_status()  # Raise an exception for non-successful status codes
             print("\n" + "Status Code:", response.status_code)
             html_content = response.text
-   
+
             if "Available" in html_content:
                 print("Status is Available.")
                 result = True
                 print("Response Check Result:",result)
                 print()
+                return result
             else:
                 print("Status is Unavailable.")
                 result = False
                 print("Response Check Result:",result)
                 print()
-        
+                return result
     except requests.exceptions.RequestException as e:
         print()
         error_message = "Error occurred: \n" + str(e)
