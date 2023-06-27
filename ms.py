@@ -8,13 +8,19 @@ import time
 from graphics import smiley_face, sad_face, red, green, blue, white, yellow, black, heart, checkmark, x, arrow_up, arrow_down, question_mark
 
 sense = SenseHat()
-timezone = "America/New_York"
 
-# Endpoints 
-ms_admin_ctr = "https://status.office365.com/api/feed/mac"
-pwr_plat_admin_ctr = "https://status.office365.com/api/feed/ppac"
-azure_status = "https://azure.status.microsoft/en-us/status"
-random_bad_endpoint = "https://httpstat.us/Random/400-404,500-504"
+TIMEZONE = "America/New_York"
+ENDPOINTS = {
+    "ms_admin_ctr" : "https://status.office365.com/api/feed/mac",
+    "pwr_plat_admin_ctr" : "https://status.office365.com/api/feed/ppac",
+    "azure_status" : "https://azure.status.microsoft/en-us/status"
+    # "random_bad_endpoint" : "https://httpstat.us/Random/400-404,500-504"
+}
+
+PRINTS = ["***** Microsoft 365 Admin Center: *****",
+          "***** Power Platform Admin Center: *****",
+          "***** Azure Status: *****"]
+        #   "***** Random Bad Endpoint: *****"]
 
 def blink_leds() -> None:
     """Flashes the LED matrix 2 times"""
@@ -86,12 +92,12 @@ def response_check(response=None):
    
             if "Available" in html_content:
                 print("Status is Available." + "\n")
-                led_timestamp(timestamp=led_time(timezone=timezone), text=blue, background=green)
+                led_timestamp(timestamp=led_time(timezone=TIMEZONE), text=blue, background=green)
                 sense.set_pixels(smiley_face)
                 result = True
             else:
                 print("Status is Unavailable." + "\n")
-                led_timestamp(timestamp=led_time(timezone=timezone), text=yellow, background=red)
+                led_timestamp(timestamp=led_time(timezone=TIMEZONE), text=yellow, background=red)
                 sense.set_pixels(sad_face)
                 result = False
     except requests.exceptions.RequestException as e:
@@ -111,33 +117,6 @@ def response_check(response=None):
         print("Response Check Result:", result)
         return result
 
-def m365_check():
-    """Executes the health check for Microsoft 365 Admin Center."""
-    blink_leds()
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Microsoft 365 Admin Center: *****")
-    response_check(endpoint(ms_admin_ctr))
-    time.sleep(2)
-
-def pwr_plt_admin():
-    """Executes the health check for Power Platform Admin Center."""
-    blink_leds()
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Power Platform Admin Center: *****")
-    response_check(endpoint(pwr_plat_admin_ctr))
-    time.sleep(2)
-
-def azure_stat():
-    """Executes the health check for Azure Status."""
-    blink_leds()
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Azure Status: *****")
-    response_check(endpoint(azure_status))
-    time.sleep(2)
-
-def rand_bad_endpoint():
-    """Executes the health check for Random Bad Endpoint."""
-    blink_leds()
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Random Bad Endpoint: *****")
-    response_check(endpoint(random_bad_endpoint))
-    time.sleep(2)
 
 def graphics():
     """Executes all graphics patterns from graphics module."""
@@ -159,12 +138,22 @@ def graphics():
     sense.set_rotation(180)
     sense.set_pixels(question_mark)
 
-def all_services_check():
-    """Executes all service check functions"""
-    m365_check()
-    pwr_plt_admin()
-    azure_stat()
-    # rand_bad_endpoint()
-    
+
+def end_address(endpoint_dict):
+    http = []
+    for k, v in endpoint_dict.items():
+        http.append(v)
+    return http
+
+
+def checks_prints(endpoints, prints):
+    http = end_address(endpoints)
+    for i, print_item in enumerate(prints):
+        blink_leds()
+        print(f"Timestamp:{timestamp(timezone=TIMEZONE)}" + print_item)
+        response_check(endpoint((http[i])))
+        time.sleep(2)
+
+
 if __name__ == '__main__':
-    all_services_check()
+    checks_prints(endpoints=ENDPOINTS, prints=PRINTS)

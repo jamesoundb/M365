@@ -5,13 +5,18 @@ from datetime import datetime
 import pytz
 import time
 
-timezone = "America/New_York"
+TIMEZONE = "America/New_York"
+ENDPOINTS = {
+    "ms_admin_ctr" : "https://status.office365.com/api/feed/mac",
+    "pwr_plat_admin_ctr" : "https://status.office365.com/api/feed/ppac",
+    "azure_status" : "https://azure.status.microsoft/en-us/status",
+    "random_bad_endpoint" : "https://httpstat.us/Random/400-404,500-504"
+}
 
-# Endpoints 
-ms_admin_ctr = "https://status.office365.com/api/feed/mac"
-pwr_plat_admin_ctr = "https://status.office365.com/api/feed/ppac"
-azure_status = "https://azure.status.microsoft/en-us/status"
-random_bad_endpoint = "https://httpstat.us/Random/400-404,500-504"
+PRINTS = ["***** Microsoft 365 Admin Center: *****",
+          "***** Power Platform Admin Center: *****",
+          "***** Azure Status: *****",
+          "***** Random Bad Endpoint: *****"]
 
 def timestamp(timezone: str) -> str:
     """Takes a timezone parameter and returns a formatted timestamp for month, day, year, hours, and minutes."""
@@ -61,32 +66,20 @@ def response_check(response=None):
         print("Response Check Result:", result)
         return result
     
-def m365_check():
-    """Executes the health check for Microsoft 365 Admin Center."""
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Microsoft 365 Admin Center: *****")
-    response_check(endpoint(ms_admin_ctr))
 
-def pwr_plt_admin():
-    """Executes the health check for Power Platform Admin Center."""
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Power Platform Admin Center: *****")
-    response_check(endpoint(pwr_plat_admin_ctr))
+def end_address(endpoint_dict):
+    http = []
+    for k, v in endpoint_dict.items():
+        http.append(v)
+    return http
 
-def azure_stat():
-    """Executes the health check for Azure Status."""
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Azure Status: *****")
-    response_check(endpoint(azure_status))
 
-def rand_bad_endpoint():
-    """Executes the health check for Random Bad Endpoint."""
-    print(f"Timestamp:{timestamp(timezone=timezone)} ***** Random Bad Endpoint: *****")
-    response_check(endpoint(random_bad_endpoint))
+def checks_prints(endpoints, prints):
+    http = end_address(endpoints)
+    for i, print_item in enumerate(prints):
+        print(f"Timestamp:{timestamp(timezone=TIMEZONE)}" + print_item)
+        response_check(endpoint((http[i])))
 
-def all_services_check():
-    """Executes all service check functions"""
-    m365_check()
-    pwr_plt_admin()
-    azure_stat()
-    rand_bad_endpoint()
-    
+
 if __name__ == '__main__':
-    all_services_check()
+    checks_prints(endpoints=ENDPOINTS, prints=PRINTS)
