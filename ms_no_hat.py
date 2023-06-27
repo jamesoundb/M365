@@ -98,6 +98,7 @@ def checks_prints(endpoint_dict, prints):
         response_check(endpoint((http[i])))
         with open("logs.csv", "a", newline="") as file:
             writer = csv.writer(file)
+            writer.writerow(["Service", "Date", "Response Code", "Error Message"])
             writer.writerows([msg] for msg in LOG_MESSAGES)
 
 
