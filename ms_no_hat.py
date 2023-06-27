@@ -48,7 +48,6 @@ def response_check(response=None):
                 print("Status is Unavailable." + "\n")
         
     except requests.exceptions.RequestException as e:
-        # Display error message on the LED matrix
         error_message = "Error occurred: \n" + str(e)
         print(error_message)
         match = re.search(r":\s*([0-9]+)", error_message)
@@ -87,7 +86,7 @@ def all_services_check():
     m365_check()
     pwr_plt_admin()
     azure_stat()
-    # rand_bad_endpoint()
+    rand_bad_endpoint()
     
 if __name__ == '__main__':
     all_services_check()
