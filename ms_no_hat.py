@@ -22,9 +22,6 @@ PRINTS = ["***** Microsoft 365 Admin Center: *****",
 
 LOG_MESSAGES = []
 
-script_directory = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_directory, "log.csv")
-
 def timestamp(timezone: str) -> str:
     """Takes a timezone parameter and returns a formatted timestamp for month, day, year, hours, and minutes."""
     est = pytz.timezone(timezone)
@@ -94,14 +91,35 @@ def checks_prints(endpoint_dict, prints):
         LOG_MESSAGES.append(stripped)
         LOG_MESSAGES.append(timestamp(timezone=TIMEZONE))
         response_check(endpoint((http[i])))
-    with open("logs.csv", "a", newline="") as file:
+
+def log_schema():
+    with open("service_logs.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["Service", "Date", "Response Code"])
-        writer.writerow(LOG_MESSAGES[:3])
-        writer.writerow(LOG_MESSAGES[3:6])
-        writer.writerow(LOG_MESSAGES[6:9])
-        writer.writerow(LOG_MESSAGES[9:])
 
+def log_data():
+    with open("service_logs.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(LOG_MESSAGES[:3])
+            writer.writerow(LOG_MESSAGES[3:6])
+            writer.writerow(LOG_MESSAGES[6:9])
+            writer.writerow(LOG_MESSAGES[9:])
+
+def logger():
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+    filename = "service_logs.csv"
+    file_path = os.path.join(script_directory, filename)
+    # File doesn't exist
+    if not os.path.exists(file_path):
+        with open(file_path, "w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["Service", "Date", "Response Code"])
+        log_data()
+    else:
+    # File does exist
+        log_data()
 
 if __name__ == '__main__':
     checks_prints(endpoint_dict=ENDPOINTS, prints=PRINTS)
+    logger()
+    

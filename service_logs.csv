@@ -1,0 +1,21 @@
+Service,Date,Response Code
+Microsoft 365 Admin Center,06/27/2023 20:36,200
+Power Platform Admin Center,06/27/2023 20:36,200
+Azure Status,06/27/2023 20:36,200
+Random Bad Endpoint,06/27/2023 20:36,"504 Server Error: Gateway Timeout for url: https://httpstat.us/Random/400-404,500-504"
+Microsoft 365 Admin Center,06/27/2023 20:36,200
+Power Platform Admin Center,06/27/2023 20:36,200
+Azure Status,06/27/2023 20:36,200
+Random Bad Endpoint,06/27/2023 20:36,"402 Client Error: Payment Required for url: https://httpstat.us/Random/400-404,500-504"
+Microsoft 365 Admin Center,06/27/2023 20:36,200
+Power Platform Admin Center,06/27/2023 20:36,200
+Azure Status,06/27/2023 20:36,200
+Random Bad Endpoint,06/27/2023 20:36,"503 Server Error: Service Unavailable for url: https://httpstat.us/Random/400-404,500-504"
+Microsoft 365 Admin Center,06/27/2023 20:37,200
+Power Platform Admin Center,06/27/2023 20:37,200
+Azure Status,06/27/2023 20:37,200
+Random Bad Endpoint,06/27/2023 20:37,"502 Server Error: Bad Gateway for url: https://httpstat.us/Random/400-404,500-504"
+Microsoft 365 Admin Center,06/27/2023 20:39,200
+Power Platform Admin Center,06/27/2023 20:39,200
+Azure Status,06/27/2023 20:39,200
+Random Bad Endpoint,06/27/2023 20:39,"500 Server Error: Internal Server Error for url: https://httpstat.us/Random/400-404,500-504"
