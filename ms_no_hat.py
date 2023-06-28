@@ -93,12 +93,12 @@ def checks_prints(endpoint_dict, prints):
         response_check(endpoint((http[i])))
 
 def log_schema():
-    with open("service_logs.csv", "w", newline="") as file:
+    with open("service_logs_no_hat.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["Service", "Date", "Response Code"])
 
 def log_data():
-    with open("service_logs.csv", "a", newline="") as file:
+    with open("service_logs_no_hat.csv", "a", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(LOG_MESSAGES[:3])
             writer.writerow(LOG_MESSAGES[3:6])
@@ -107,13 +107,11 @@ def log_data():
 
 def logger():
     script_directory = os.path.dirname(os.path.abspath(__file__))
-    filename = "service_logs.csv"
+    filename = "service_logs_no_hat.csv"
     file_path = os.path.join(script_directory, filename)
     # File doesn't exist
     if not os.path.exists(file_path):
-        with open(file_path, "w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Service", "Date", "Response Code"])
+        log_schema()
         log_data()
     else:
     # File does exist

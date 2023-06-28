@@ -1,4 +1,5 @@
 import requests
+import os
 import re
 import csv
 from sense_hat import SenseHat
@@ -13,6 +14,7 @@ TIMEZONE = "America/New_York"
 ENDPOINTS = {
     "ms_admin_ctr" : "https://status.office365.com/api/feed/mac",
     "pwr_plat_admin_ctr" : "https://status.office365.com/api/feed/ppac",
+    "azure_status" : "https://azure.status.microsoft/en-us/status",
     "azure_status" : "https://azure.status.microsoft/en-us/status"
     # "random_bad_endpoint" : "https://httpstat.us/Random/400-404,500-504"
 }
@@ -21,6 +23,8 @@ PRINTS = ["***** Microsoft 365 Admin Center: *****",
           "***** Power Platform Admin Center: *****",
           "***** Azure Status: *****"]
         #   "***** Random Bad Endpoint: *****"]
+
+LOG_MESSAGES = []
 
 def blink_leds() -> None:
     """Flashes the LED matrix 2 times"""
@@ -87,6 +91,7 @@ def response_check(response=None):
             sense.set_pixels(smiley_face)
             time.sleep(2)
             print("\n" + "Status Code:", response.status_code)
+            LOG_MESSAGES.append("200")
             html_content = response.text
    
             if "Available" in html_content:
@@ -107,6 +112,7 @@ def response_check(response=None):
                 return result
     except requests.exceptions.RequestException as e:
         # Display error message on the LED matrix
+        LOG_MESSAGES.append(e)
         error_message = "Error occurred: \n" + str(e)
         print(error_message)
         match = re.search(r":\s*([0-9]+)", error_message)
@@ -150,8 +156,37 @@ def checks_prints(endpoint_dict, prints):
     for i, print_item in enumerate(prints):
         blink_leds()
         print(f"Timestamp:{timestamp(timezone=TIMEZONE)}" + print_item)
+        stripped = ' '.join(print_item.replace("*", "").replace(":", "").split())
+        LOG_MESSAGES.append(stripped)
+        LOG_MESSAGES.append(timestamp(timezone=TIMEZONE))
         response_check(endpoint((http[i])))
         time.sleep(2)
 
+def log_schema():
+    with open("service_logs.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Service", "Date", "Response Code"])
+
+def log_data():
+    with open("service_logs.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(LOG_MESSAGES[:3])
+            writer.writerow(LOG_MESSAGES[3:6])
+            writer.writerow(LOG_MESSAGES[6:9])
+            writer.writerow(LOG_MESSAGES[9:])
+
+def logger():
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+    filename = "service_logs.csv"
+    file_path = os.path.join(script_directory, filename)
+    # File doesn't exist
+    if not os.path.exists(file_path):
+        log_schema()
+        log_data()
+    else:
+    # File does exist
+        log_data()
+
 if __name__ == '__main__':
     checks_prints(endpoint_dict=ENDPOINTS, prints=PRINTS)
+    logger()
