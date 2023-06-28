@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import requests
 import os
 import re
@@ -21,8 +23,9 @@ ENDPOINTS = {
 
 PRINTS = ["***** Microsoft 365 Admin Center: *****",
           "***** Power Platform Admin Center: *****",
-          "***** Azure Status: *****"]
-        #   "***** Random Bad Endpoint: *****"]
+          "***** Azure Status: *****"
+        #   "***** Random Bad Endpoint: *****"
+        ]
 
 LOG_MESSAGES = []
 

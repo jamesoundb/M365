@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import requests
 import os
 import re
@@ -11,14 +13,15 @@ TIMEZONE = "America/New_York"
 ENDPOINTS = {
     "ms_admin_ctr" : "https://status.office365.com/api/feed/mac",
     "pwr_plat_admin_ctr" : "https://status.office365.com/api/feed/ppac",
-    "azure_status" : "https://azure.status.microsoft/en-us/status",
-    "random_bad_endpoint" : "https://httpstat.us/Random/400-404,500-504"
+    "azure_status" : "https://azure.status.microsoft/en-us/status"
+    # "random_bad_endpoint" : "https://httpstat.us/Random/400-404,500-504"
 }
 
 PRINTS = ["***** Microsoft 365 Admin Center: *****",
           "***** Power Platform Admin Center: *****",
-          "***** Azure Status: *****",
-          "***** Random Bad Endpoint: *****"]
+          "***** Azure Status: *****"
+        #   "***** Random Bad Endpoint: *****"
+        ]
 
 LOG_MESSAGES = []
 
