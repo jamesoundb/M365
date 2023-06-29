@@ -6,8 +6,6 @@ import re
 import csv
 from datetime import datetime
 import pytz
-import time
-
 
 TIMEZONE = "America/New_York"
 ENDPOINTS = {
@@ -52,7 +50,7 @@ def response_check(response=None):
         if response is not None:
             response.raise_for_status()  # Raise an exception for non-successful status codes
             print("\n" + "Status Code:", response.status_code)
-            LOG_MESSAGES.append("200")
+            LOG_MESSAGES.append(response.status_code)
             html_content = response.text
 
             if "Available" in html_content:
@@ -72,15 +70,7 @@ def response_check(response=None):
         print()
         error_message = "Error occurred: \n" + str(e)
         print(error_message)
-        match = re.search(r":\s*([0-9]+)", error_message)
-        if match:
-            error_number = match.group(1)
-
-        else:
-            print("No number found.")
-        
         result = False
-        
         print("Response Check Result:", result)
         return result
     

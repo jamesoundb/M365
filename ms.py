@@ -8,9 +8,11 @@ from sense_hat import SenseHat
 from datetime import datetime
 import pytz
 import time
-from graphics import smiley_face, sad_face, red, green, blue, white, yellow, black, heart, checkmark, x, arrow_up, arrow_down, question_mark
+from graphics import *
 
 sense = SenseHat()
+
+# graphics(sense)
 
 TIMEZONE = "America/New_York"
 ENDPOINTS = {
@@ -94,7 +96,7 @@ def response_check(response=None):
             sense.set_pixels(smiley_face)
             time.sleep(2)
             print("\n" + "Status Code:", response.status_code)
-            LOG_MESSAGES.append("200")
+            LOG_MESSAGES.append(response.status_code)
             html_content = response.text
    
             if "Available" in html_content:
@@ -131,26 +133,6 @@ def response_check(response=None):
         print("Response Check Result:", result)
         return result
 
-
-def graphics():
-    """Executes all graphics patterns from graphics module."""
-    sense.set_rotation(180)
-    sense.set_pixels(heart)
-    time.sleep(5)
-    sense.set_rotation(180)
-    sense.set_pixels(checkmark)
-    time.sleep(5)
-    sense.set_rotation(180)
-    sense.set_pixels(x)
-    time.sleep(5)
-    sense.set_rotation(180)
-    sense.set_pixels(arrow_up)
-    time.sleep(5)
-    sense.set_rotation(180)
-    sense.set_pixels(arrow_down)
-    time.sleep(5)
-    sense.set_rotation(180)
-    sense.set_pixels(question_mark)
 
 def checks_prints(endpoint_dict, prints):
     http = []

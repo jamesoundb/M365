@@ -1,3 +1,27 @@
+import time
+from sense_hat import SenseHat
+
+def graphics(sense):
+    """Executes all graphics patterns from graphics module."""
+    sense.set_rotation(180)
+    sense.set_pixels(heart)
+    time.sleep(5)
+    # sense.set_rotation(180)
+    # sense.set_pixels(checkmark)
+    # time.sleep(5)
+    # sense.set_rotation(180)
+    # sense.set_pixels(x)
+    # time.sleep(5)
+    # sense.set_rotation(180)
+    # sense.set_pixels(arrow_up)
+    # time.sleep(5)
+    # sense.set_rotation(180)
+    # sense.set_pixels(arrow_down)
+    # time.sleep(5)
+    # sense.set_rotation(180)
+    # sense.set_pixels(question_mark)
+
+
 ##### Colors #####
 red = (255, 0, 0)
 green = (0, 255, 0)
