@@ -21,4 +21,6 @@ source myenv/bin/activate
 myenv\Scripts\activate.ps1
 ```
 * #### Finally, execute your desired requirements.txt pip install and then execute the script. After executing deactivate the virtual environment with:
-`deactive`
+```bash
+deactive
+```
